@@ -34,21 +34,37 @@ public class RetinaParser extends JPanel implements ActionListener {
     
     public RetinaParser() {   
         super(new BorderLayout());
-        
-        //Create a file chooser
         fc = new JFileChooser();
+        createButtons();
+        
+
+        //Add the buttons to this panel
+        //add(buttonPanel, BorderLayout.PAGE_START);
+        
+        //add(buttonPanel);
+        //add(displayPanel);
+        add(buttonPanel, BorderLayout.LINE_START);
+        add(displayPanel, BorderLayout.LINE_END);
+    }
+    
+    private void createButtons() {        
         
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());    // use a gridlayout for these buttons
+        buttonPanel.setLayout(new GridLayout(3,0, 1, 16));    // use a gridlayout for these buttons, 3 columns 1 row, 1 unit (pixel) hor and ver gaps between panels.
         
+        /* use this if you need empty panels between your grid layout
+        JPanel[] placeHolders = new JPanel[3];
+        for (int i=0; i<placeHolders.length; i++) {
+            placeHolders[i] = new JPanel();
+        }*/
         //openButton = new JButton("Open a File...", createImageIcon("images/Open16.gif")); // can add an image next to the Button Text if you want
         openButton = new JButton("Open a File...");
         openButton.addActionListener(this);
         
-        parseButton = new JButton("Parse");
+        parseButton = new JButton("Parse File");
         parseButton.addActionListener(this);
         
-        generateButton = new JButton("Generate");
+        generateButton = new JButton("Generate Report");
         generateButton.addActionListener(this);
         
         buttonPanel.add(openButton);
@@ -62,15 +78,7 @@ public class RetinaParser extends JPanel implements ActionListener {
         
         displayPanel.add(infoPanel, BorderLayout.PAGE_START);
         displayPanel.add(checkBoxPanel, BorderLayout.CENTER);
-        displayPanel.add(optionsPanel, BorderLayout.PAGE_END);
-
-        //Add the buttons to this panel
-        //add(buttonPanel, BorderLayout.PAGE_START);
-        
-        //add(buttonPanel);
-        //add(displayPanel);
-        add(buttonPanel, BorderLayout.LINE_START);
-        add(displayPanel, BorderLayout.LINE_END);
+        displayPanel.add(optionsPanel, BorderLayout.PAGE_END);       
     }
     
     private static void createAndShowGUI() {
