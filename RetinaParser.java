@@ -1,4 +1,5 @@
 
+
 import java.io.File;
 import java.awt.*;
 import java.awt.event.*;
@@ -89,7 +90,7 @@ public class RetinaParser extends JPanel implements ActionListener {
         displayPanel.setLayout(new GridLayout(3,0,1,16));
         displayPanel.setPreferredSize(new Dimension(400,300));
         infoPanel = new JPanel();
-        infoLabel = new JLabel("File:" + fileName);
+        infoLabel = new JLabel("File:");
         infoPanel.add(infoLabel);
         checkBoxPanel = new JPanel();
         optionsPanel = new JPanel();
@@ -99,8 +100,11 @@ public class RetinaParser extends JPanel implements ActionListener {
         displayPanel.add(optionsPanel, BorderLayout.PAGE_END);       
     }
     
-    private void populate() {
-        fileName = file.getName();
+    private void populate() {    
+        infoPanel.remove(infoLabel);
+        infoLabel = new JLabel("File:" + file.getName());
+        infoPanel.add(infoLabel);
+        updateUI();
     }
     
     private static void createAndShowGUI() {
@@ -119,7 +123,6 @@ public class RetinaParser extends JPanel implements ActionListener {
     
    	
 	public static void main(String[] args) {		
-
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -133,19 +136,17 @@ public class RetinaParser extends JPanel implements ActionListener {
 	}  
     
     public void actionPerformed(ActionEvent e) {
-         //Handle open button action.
         if (e.getSource() == openButton) {
             int returnVal = fc.showOpenDialog(RetinaParser.this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 file = fc.getSelectedFile();
+                // parse file first, then populate the gui with the updated information & components
                 populate();
                 //log.append("Opening: " + file.getName() + "." + newline);
             } else {
                 //log.append("Open command cancelled by user." + newline);
             }
             //log.setCaretPosition(log.getDocument().getLength());
-
-        //Handle save button action.
         } else if (e.getSource() == generateButton) {
             // this is where the application would generate a file based upon the xml file used and options specified.
         }
@@ -162,6 +163,7 @@ public class RetinaParser extends JPanel implements ActionListener {
             }
         
             String extension = getExtension(f);
+            
             if (extension != null) { 
                 if (extension.equals(xml)) {
                     return true;
@@ -188,4 +190,3 @@ public class RetinaParser extends JPanel implements ActionListener {
         }
     }
 }
-
